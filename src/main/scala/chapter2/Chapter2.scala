@@ -16,4 +16,20 @@ object Chapter2 {
 
     fib(0, 0, 0)
   }
+
+  def isOrdered[A](arr: Array[A], ordered: (A, A) => Boolean): Boolean = {
+    @tailrec
+    def isOrdered(elem: A, next: Array[A], result: Boolean): Boolean =
+      if (!result || next.isEmpty)
+        // If there's a false, then stop computing since result will be false.
+        result
+      else
+        isOrdered(next.head, next.tail, result && ordered(elem, next.head))
+
+    if (arr.isEmpty)
+      true
+    else
+      isOrdered(arr.head, arr.tail, result = true)
+  }
+
 }
