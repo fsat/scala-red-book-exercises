@@ -38,4 +38,34 @@ class Chapter2Spec extends UnitTestLike {
       }
 
   }
+
+  describe("curry") {
+    it("curries the function") {
+      def plus(a: Int, b: Int): Int = a + b
+
+      val plusCurried = Chapter2.curry(plus)
+
+      plusCurried(1)(2) shouldBe 3
+    }
+  }
+
+  describe("uncurry") {
+    it("uncurries the function") {
+      def plusCurried(a: Int)(b: Int): Int = a + b
+
+      val plusUncurried = Chapter2.uncurry(plusCurried)
+
+      plusUncurried(1, 2) shouldBe 3
+    }
+  }
+
+  describe("compose") {
+    it("composes 2 functions") {
+      def plusOne(a: Int): Int = a + 1
+      def toDoubleMultiplyTwo(a: Int): BigInt = BigInt(a * 2)
+
+      val combined = Chapter2.compose(toDoubleMultiplyTwo, plusOne)
+      combined(3) shouldBe BigInt(8)
+    }
+  }
 }
