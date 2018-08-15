@@ -55,6 +55,19 @@ object Chapter3 {
 
       iterateAndDrop(list, List())
     }
+
+    def init[A](list: List[A]): List[A] = {
+      @tailrec
+      def iterateUntilSecondLast(current: List[A], result: List[A]): List[A] =
+        current match {
+          case Nil => result
+          case Cons(_, Nil) => result
+          case Cons(head, tail) =>
+            iterateUntilSecondLast(tail, append(result, head))
+        }
+
+      iterateUntilSecondLast(list, List())
+    }
   }
 
   sealed trait List[+A]

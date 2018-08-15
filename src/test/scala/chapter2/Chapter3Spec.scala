@@ -58,4 +58,15 @@ class Chapter3Spec extends UnitTestLike {
       dropWhile[Int](List(1, 2, 3, 4, 5), _ % 2 == 0) shouldBe List(1, 3, 5)
     }
   }
+
+  describe("init") {
+    Seq(
+      ("drops the last element", List(1, 2, 3, 4, 5), List(1, 2, 3, 4)),
+      ("handles nil", Nil, Nil)).foreach {
+        case (scenario, input, expectedResult) =>
+          it(scenario) {
+            init(input) shouldBe expectedResult
+          }
+      }
+  }
 }
