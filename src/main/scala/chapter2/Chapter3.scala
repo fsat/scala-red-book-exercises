@@ -1,5 +1,7 @@
 package chapter2
 
+import scala.annotation.tailrec
+
 object Chapter3 {
   object List {
     def apply[A](as: A*): List[A] =
@@ -20,6 +22,20 @@ object Chapter3 {
 
     def setHead[A](a: A, list: List[A]): List[A] =
       Cons(a, list)
+
+    def drop[A](list: List[A], n: Int): List[A] = {
+      @tailrec
+      def drop(idx: Int, result: List[A]): List[A] =
+        if (idx == n)
+          result
+        else
+          result match {
+            case Nil => result
+            case Cons(_, tail) => drop(idx + 1, tail)
+          }
+
+      drop(0, list)
+    }
   }
 
   sealed trait List[+A]

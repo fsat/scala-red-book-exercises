@@ -39,4 +39,17 @@ class Chapter3Spec extends UnitTestLike {
       setHead(0, List()) shouldBe List(0)
     }
   }
+
+  describe("drop") {
+    Seq(
+      ("nil", Nil, 1, Nil),
+      ("drop all elements", List(1), 1, Nil),
+      ("drop < size of the list", List(1, 2, 3), 1, List(2, 3)),
+      ("drop > size of the list", List(1, 2, 3), 5, Nil)).foreach {
+        case (scenario, input, size, expectedResult) =>
+          it(s"handles $scenario") {
+            drop(input, size) shouldBe expectedResult
+          }
+      }
+  }
 }
