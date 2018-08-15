@@ -17,6 +17,9 @@ object Chapter3 {
         case Nil => Nil
         case Cons(_, tail) => tail
       }
+
+    def setHead[A](a: A, list: List[A]): List[A] =
+      Cons(a, list)
   }
 
   sealed trait List[+A]

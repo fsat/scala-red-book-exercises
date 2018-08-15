@@ -29,4 +29,14 @@ class Chapter3Spec extends UnitTestLike {
       tail(List()) shouldBe Nil
     }
   }
+
+  describe("setHead") {
+    it("prepends the element") {
+      setHead(0, List(1, 2, 3, 4, 5)) shouldBe List(0, 1, 2, 3, 4, 5)
+    }
+
+    it("creates a list from an empty list") {
+      setHead(0, List()) shouldBe List(0)
+    }
+  }
 }
