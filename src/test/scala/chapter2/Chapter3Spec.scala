@@ -4,7 +4,7 @@ import base.UnitTestLike
 
 class Chapter3Spec extends UnitTestLike {
   import Chapter3.{ List, Cons, Nil }
-  import Chapter3.List.sum
+  import Chapter3.List._
 
   describe("pattern match list") {
     it("matches expected value") {
@@ -17,6 +17,16 @@ class Chapter3Spec extends UnitTestLike {
       }
 
       x shouldBe 3
+    }
+  }
+
+  describe("tail") {
+    it("returns remainder of the list") {
+      tail(List(1, 2, 3, 4, 5)) shouldBe List(2, 3, 4, 5)
+    }
+
+    it("returns nil for empty list") {
+      tail(List()) shouldBe Nil
     }
   }
 }

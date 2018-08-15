@@ -11,6 +11,12 @@ object Chapter3 {
         case Nil => 0
         case Cons(head, tail) => head + sum(tail)
       }
+
+    def tail[A](as: List[A]): List[A] =
+      as match {
+        case Nil => Nil
+        case Cons(_, tail) => tail
+      }
   }
 
   sealed trait List[+A]
