@@ -36,6 +36,25 @@ object Chapter3 {
 
       drop(0, list)
     }
+
+    def append[A](list: List[A], a: A): List[A] =
+      list match {
+        case Nil => List(a)
+        case Cons(head, tail) => Cons(head, append(tail, a))
+      }
+
+    def dropWhile[A](list: List[A], cond: A => Boolean): List[A] = {
+      @tailrec
+      def iterateAndDrop(current: List[A], result: List[A]): List[A] =
+        current match {
+          case Nil => result
+          case Cons(head, tail) =>
+            val nextResult = if (cond(head)) result else append(result, head)
+            iterateAndDrop(tail, nextResult)
+        }
+
+      iterateAndDrop(list, List())
+    }
   }
 
   sealed trait List[+A]

@@ -52,4 +52,10 @@ class Chapter3Spec extends UnitTestLike {
           }
       }
   }
+
+  describe("dropWhile") {
+    it("drops all element matching condition") {
+      dropWhile[Int](List(1, 2, 3, 4, 5), _ % 2 == 0) shouldBe List(1, 3, 5)
+    }
+  }
 }
