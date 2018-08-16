@@ -145,6 +145,8 @@ object Chapter3 {
           (result, elem) => append(result, f(elem))
         })
 
+    def filterViaFlatMap[A](list: List[A])(f: A => Boolean): List[A] =
+      flatMap(list)(elem => if (f(elem)) List(elem) else List())
   }
 
   sealed trait List[+A]

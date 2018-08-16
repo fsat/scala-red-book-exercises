@@ -170,4 +170,10 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("filterViaFlatMap") {
+    it("filters only wanted elements") {
+      filterViaFlatMap(List(1, 2, 3, 4))(_ % 2 != 0) shouldBe List(1, 3)
+    }
+  }
+
 }
