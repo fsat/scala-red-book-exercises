@@ -118,6 +118,9 @@ object Chapter3 {
 
     def appendViaFoldRight[A](list: List[A], elem: A): List[A] =
       foldRight(list, List(elem))(Cons(_, _))
+
+    def concat[A](a: List[List[A]]): List[A] =
+      foldLeft[List[A], List[A]](a, Nil: List[A])((result, list) => foldLeft(list, result)(append))
   }
 
   sealed trait List[+A]

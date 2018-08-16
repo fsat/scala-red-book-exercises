@@ -134,4 +134,10 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("concat") {
+    it("concats list of lists into a single list") {
+      concat(List(List(1), List(2, 3), List(4, 5))) shouldBe List(1, 2, 3, 4, 5)
+    }
+  }
+
 }
