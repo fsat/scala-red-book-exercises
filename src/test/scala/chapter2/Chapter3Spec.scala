@@ -128,4 +128,10 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("appendViaFoldRight") {
+    it("appends the element to the end of list") {
+      appendViaFoldRight(List(1, 2, 3), 4) shouldBe List(1, 2, 3, 4)
+    }
+  }
+
 }

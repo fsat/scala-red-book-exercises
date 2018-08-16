@@ -115,6 +115,9 @@ object Chapter3 {
       val fReverse: (A, B) => B = (b, a) => f(a, b)
       foldRight(reverse(list), z)(fReverse)
     }
+
+    def appendViaFoldRight[A](list: List[A], elem: A): List[A] =
+      foldRight(list, List(elem))(Cons(_, _))
   }
 
   sealed trait List[+A]
