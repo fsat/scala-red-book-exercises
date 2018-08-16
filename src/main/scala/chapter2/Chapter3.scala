@@ -104,6 +104,17 @@ object Chapter3 {
 
     def reverse[A](list: List[A]): List[A] =
       foldLeft(list, Nil: List[A])((result, elem) => setHead(elem, result))
+
+    def foldRightViaFoldLeft[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
+      val fReverse: (B, A) => B = (b, a) => f(a, b)
+
+      foldLeft(reverse(as), z)(fReverse)
+    }
+
+    def foldLeftViaFoldRight[A, B](list: List[A], z: B)(f: (B, A) => B): B = {
+      val fReverse: (A, B) => B = (b, a) => f(a, b)
+      foldRight(reverse(list), z)(fReverse)
+    }
   }
 
   sealed trait List[+A]

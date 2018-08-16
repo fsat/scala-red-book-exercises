@@ -115,4 +115,17 @@ class Chapter3Spec extends UnitTestLike {
       reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
     }
   }
+
+  describe("foldRightViaFoldLeft") {
+    it("handles Nil and Cons") {
+      foldRightViaFoldLeft(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) shouldBe List(1, 2, 3)
+    }
+  }
+
+  describe("foldLeftViaFoldRight") {
+    it("handles Nil and Cons") {
+      foldLeftViaFoldRight(List(1, 2, 3), Nil: List[Int])(append) shouldBe List(1, 2, 3)
+    }
+  }
+
 }
