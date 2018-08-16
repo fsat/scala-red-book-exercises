@@ -131,6 +131,14 @@ object Chapter3 {
 
       mapToTheEnd(list, Nil)
     }
+
+    def plusOne(list: List[Int]): List[Int] = map(list)(_ + 1)
+
+    def doubleToString(list: List[Double]): List[String] = map(list)(_.toString)
+
+    def filter[A](list: List[A])(f: A => Boolean): List[A] =
+      foldLeft(list, Nil: List[A])((result, elem) => if (f(elem)) append(result, elem) else result)
+
   }
 
   sealed trait List[+A]

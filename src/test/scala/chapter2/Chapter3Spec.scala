@@ -146,4 +146,22 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("plusOne") {
+    it("adds one to the list element") {
+      plusOne(List(1, 2, 3)) shouldBe List(2, 3, 4)
+    }
+  }
+
+  describe("doubleToString") {
+    it("converts list element to string") {
+      doubleToString(List(1.0, 2.0, 3.0)) shouldBe List("1.0", "2.0", "3.0")
+    }
+  }
+
+  describe("filter") {
+    it("filters only wanted elements") {
+      filter(List(1, 2, 3, 4))(_ % 2 != 0) shouldBe List(1, 3)
+    }
+  }
+
 }
