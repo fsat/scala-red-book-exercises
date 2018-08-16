@@ -164,4 +164,10 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("flatMap") {
+    it("flat maps over a list") {
+      flatMap(List(1, 2, 3))(v => List(v, v)) shouldBe List(1, 1, 2, 2, 3, 3)
+    }
+  }
+
 }

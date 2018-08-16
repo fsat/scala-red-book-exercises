@@ -139,6 +139,12 @@ object Chapter3 {
     def filter[A](list: List[A])(f: A => Boolean): List[A] =
       foldLeft(list, Nil: List[A])((result, elem) => if (f(elem)) append(result, elem) else result)
 
+    def flatMap[A, B](list: List[A])(f: A => List[B]): List[B] =
+      concat(
+        foldLeft(list, Nil: List[List[B]]) {
+          (result, elem) => append(result, f(elem))
+        })
+
   }
 
   sealed trait List[+A]
