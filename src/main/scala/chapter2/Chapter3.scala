@@ -121,6 +121,16 @@ object Chapter3 {
 
     def concat[A](a: List[List[A]]): List[A] =
       foldLeft[List[A], List[A]](a, Nil: List[A])((result, list) => foldLeft(list, result)(append))
+
+    def map[A, B](list: List[A])(f: A => B): List[B] = {
+      def mapToTheEnd(current: List[A], result: List[B]): List[B] =
+        current match {
+          case Nil => result
+          case Cons(head, tail) => mapToTheEnd(tail, append(result, f(head)))
+        }
+
+      mapToTheEnd(list, Nil)
+    }
   }
 
   sealed trait List[+A]

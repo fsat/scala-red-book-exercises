@@ -140,4 +140,10 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("map") {
+    it("transforms the list") {
+      map(List(1, 2, 3))(v => s"Hey $v") shouldBe List("Hey 1", "Hey 2", "Hey 3")
+    }
+  }
+
 }
