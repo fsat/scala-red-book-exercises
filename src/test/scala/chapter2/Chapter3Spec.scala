@@ -176,4 +176,20 @@ class Chapter3Spec extends UnitTestLike {
     }
   }
 
+  describe("zipWith") {
+    def plus(a: Int, b: Int): Int = a + b
+
+    Seq(
+      ("left nil", List[Int](), List(10, 11, 12), List[Int]()),
+      ("right nil", List(100, 200, 300), List[Int](), List[Int]()),
+      ("balanced", List(100, 200, 300), List(10, 11, 12), List(110, 211, 312)),
+      ("more left", List(100, 200, 300, -1), List(10, 11, 12), List(110, 211, 312)),
+      ("more right", List(100, 200, 300), List(10, 11, 12, -1), List(110, 211, 312))).foreach {
+        case (scenario, left, right, expectedResult) =>
+          it(s"handles $scenario") {
+            zipWith(left, right)(plus) shouldBe expectedResult
+          }
+      }
+  }
+
 }

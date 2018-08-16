@@ -147,6 +147,19 @@ object Chapter3 {
 
     def filterViaFlatMap[A](list: List[A])(f: A => Boolean): List[A] =
       flatMap(list)(elem => if (f(elem)) List(elem) else List())
+
+    def zipWith[A, B, C](left: List[A], right: List[B])(f: (A, B) => C): List[C] = {
+      @tailrec
+      def zipToBothEnds(leftCurrent: List[A], rightCurrent: List[B], result: List[C]): List[C] =
+        (leftCurrent, rightCurrent) match {
+          case (Nil, _) => result
+          case (_, Nil) => result
+          case (Cons(leftHead, leftTail), Cons(rightHead, rightTail)) =>
+            zipToBothEnds(leftTail, rightTail, append(result, f(leftHead, rightHead)))
+        }
+
+      zipToBothEnds(left, right, List())
+    }
   }
 
   sealed trait List[+A]
