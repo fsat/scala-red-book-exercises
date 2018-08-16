@@ -84,6 +84,17 @@ object Chapter3 {
 
       countLength(list, 0)
     }
+
+    def foldLeft[A, B](list: List[A], z: B)(f: (B, A) => B): B = {
+      @tailrec
+      def foldLeftToEnd(current: List[A], result: B): B =
+        current match {
+          case Nil => result
+          case Cons(head, tail) => foldLeftToEnd(tail, f(result, head))
+        }
+
+      foldLeftToEnd(list, z)
+    }
   }
 
   sealed trait List[+A]

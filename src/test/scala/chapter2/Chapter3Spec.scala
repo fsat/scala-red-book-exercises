@@ -81,4 +81,14 @@ class Chapter3Spec extends UnitTestLike {
       List.length(List(1, 2, 3)) shouldBe 3
     }
   }
+
+  describe("foldLeft") {
+    it("folds correctly") {
+      foldLeft(List(1, 2, 3), 0)(_ + _) shouldBe 6
+    }
+
+    it("handles Nil and Cons") {
+      foldLeft(List(1, 2, 3), Nil: List[Int])(append) shouldBe List(1, 2, 3)
+    }
+  }
 }
