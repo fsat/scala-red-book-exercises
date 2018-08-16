@@ -95,6 +95,12 @@ object Chapter3 {
 
       foldLeftToEnd(list, z)
     }
+
+    def foldLeftLen[A](list: List[A]): Int = foldLeft(list, 0)((len, _) => len + 1)
+
+    def foldLeftSum(list: List[Int]): Int = foldLeft(list, 0)(_ + _)
+
+    def foldLeftProduct(list: List[Int]): Int = foldLeft(list, 1)(_ * _)
   }
 
   sealed trait List[+A]

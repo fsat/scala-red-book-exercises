@@ -91,4 +91,22 @@ class Chapter3Spec extends UnitTestLike {
       foldLeft(List(1, 2, 3), Nil: List[Int])(append) shouldBe List(1, 2, 3)
     }
   }
+
+  describe("foldLeftLen") {
+    it("returns the length of the list") {
+      foldLeftLen(List(1, 2, 3)) shouldBe 3
+    }
+  }
+
+  describe("foldLeftSum") {
+    it("returns the sum of the list") {
+      foldLeftSum(List(1, 2, 3)) shouldBe 6
+    }
+  }
+
+  describe("foldLeftProduct") {
+    it("returns the product of the list") {
+      foldLeftProduct(List(1, 2, 4)) shouldBe 8
+    }
+  }
 }
