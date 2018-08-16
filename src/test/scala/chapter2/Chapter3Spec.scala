@@ -192,4 +192,23 @@ class Chapter3Spec extends UnitTestLike {
       }
   }
 
+  describe("dropRight") {
+    it("drops elements from the right") {
+      dropRight(List(1, 2, 3, 4, 5), 2) shouldBe List(1, 2, 3)
+    }
+  }
+
+  describe("hasSubsequence") {
+    Seq(
+      ("subsequent is present - 1", List(1, 2, 3, 4), List(1, 2), true),
+      ("subsequent is present - 2", List(1, 2, 3, 4), List(2, 3), true),
+      ("subsequent is present - 3", List(1, 2, 3, 4), List(3, 4), true),
+      ("subsequent is not present", List(1, 2, 3, 4), List(1, 3), false)).foreach {
+        case (scenario, list, subList, expectedResult) =>
+          it(s"returns $expectedResult when $scenario") {
+            hasSubsequence(list, subList) shouldBe expectedResult
+          }
+      }
+  }
+
 }

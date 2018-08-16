@@ -160,6 +160,44 @@ object Chapter3 {
 
       zipToBothEnds(left, right, List())
     }
+
+    def dropRight[A](list: List[A], size: Int): List[A] = {
+      val listLength = length(list) - size
+
+      @tailrec
+      def collectToLimit(idx: Int, current: List[A], result: List[A]): List[A] =
+        if (idx >= listLength)
+          result
+        else
+          current match {
+            case Nil => Nil
+            case Cons(head, tail) => collectToLimit(idx + 1, tail, append(result, head))
+          }
+
+      collectToLimit(0, list, List())
+    }
+
+    def hasSubsequence[A](list: List[A], sub: List[A]): Boolean = {
+      val subLength = length(sub)
+
+      @tailrec
+      def hasSubsequenceFromLastToHead(current: List[A], built: List[A]): Boolean = {
+        current match {
+          case Nil => false
+          case Cons(elem, tail) =>
+            val appended = setHead(elem, built)
+            val builtNext = if (length(appended) > subLength) dropRight(appended, 1) else appended
+
+            val matchFound = builtNext == sub
+            if (matchFound)
+              true
+            else
+              hasSubsequenceFromLastToHead(tail, builtNext)
+        }
+      }
+
+      hasSubsequenceFromLastToHead(reverse(list), List())
+    }
   }
 
   sealed trait List[+A]
