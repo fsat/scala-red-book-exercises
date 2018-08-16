@@ -109,4 +109,10 @@ class Chapter3Spec extends UnitTestLike {
       foldLeftProduct(List(1, 2, 4)) shouldBe 8
     }
   }
+
+  describe("reverse") {
+    it("reverses the list") {
+      reverse(List(1, 2, 3)) shouldBe List(3, 2, 1)
+    }
+  }
 }

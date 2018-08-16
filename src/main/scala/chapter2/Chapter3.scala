@@ -101,6 +101,9 @@ object Chapter3 {
     def foldLeftSum(list: List[Int]): Int = foldLeft(list, 0)(_ + _)
 
     def foldLeftProduct(list: List[Int]): Int = foldLeft(list, 1)(_ * _)
+
+    def reverse[A](list: List[A]): List[A] =
+      foldLeft(list, Nil: List[A])((result, elem) => setHead(elem, result))
   }
 
   sealed trait List[+A]
