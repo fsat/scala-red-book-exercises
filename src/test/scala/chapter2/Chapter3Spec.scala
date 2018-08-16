@@ -69,4 +69,10 @@ class Chapter3Spec extends UnitTestLike {
           }
       }
   }
+
+  describe("foldRight") {
+    it("handles Nil and Cons") {
+      foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) shouldBe List(1, 2, 3)
+    }
+  }
 }
