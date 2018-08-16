@@ -74,6 +74,16 @@ object Chapter3 {
         case Nil => z
         case Cons(x, xs) => f(x, foldRight(xs, z)(f))
       }
+
+    def length[A](list: List[A]): Int = {
+      def countLength(current: List[A], count: Int): Int =
+        current match {
+          case Nil => count
+          case Cons(_, tail) => countLength(tail, count + 1)
+        }
+
+      countLength(list, 0)
+    }
   }
 
   sealed trait List[+A]

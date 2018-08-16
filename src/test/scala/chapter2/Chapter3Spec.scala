@@ -75,4 +75,10 @@ class Chapter3Spec extends UnitTestLike {
       foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) shouldBe List(1, 2, 3)
     }
   }
+
+  describe("length") {
+    it("returns the length of the list") {
+      List.length(List(1, 2, 3)) shouldBe 3
+    }
+  }
 }
