@@ -227,6 +227,19 @@ object Chapter3 {
 
       maxToLeafs(tree)
     }
+
+    def depth[A](tree: Tree[A]): Int = {
+      def depthToLeafs(tree: Tree[A], depth: Int): Int =
+        tree match {
+          case Leaf(_) => 1 + depth
+          case Branch(left, right) =>
+            val leftMax = depthToLeafs(left, depth)
+            val rightMax = depthToLeafs(right, depth)
+            1 + (if (leftMax > rightMax) leftMax else rightMax)
+        }
+
+      depthToLeafs(tree, 0)
+    }
   }
 
   sealed trait Tree[+A]

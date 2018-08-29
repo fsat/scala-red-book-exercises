@@ -256,7 +256,32 @@ class Chapter3Spec extends UnitTestLike {
                 Leaf(3)))), 2002)).foreach {
           case (scenario, input, expectedResult) =>
             it(scenario) {
-              Tree.maximum(input) shouldBe expectedResult
+              maximum(input) shouldBe expectedResult
+            }
+        }
+    }
+
+    describe("depth") {
+      Seq(
+        ("leaf", Leaf(1), 1),
+        ("simple tree", Branch(Leaf(1), Leaf(3)), 2),
+        ("complex tree",
+          Branch(
+            Branch(
+              Branch(
+                Branch(
+                  Leaf(0),
+                  Leaf(37)),
+                Leaf(2002)),
+              Leaf(37)),
+            Branch(
+              Leaf(41),
+              Branch(
+                Leaf(2),
+                Leaf(3)))), 5)).foreach {
+          case (scenario, input, expectedResult) =>
+            it(scenario) {
+              depth(input) shouldBe expectedResult
             }
         }
     }
