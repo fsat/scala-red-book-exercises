@@ -214,6 +214,19 @@ object Chapter3 {
 
       sizeToLeafs(tree)
     }
+
+    def maximum(tree: Tree[Int]): Int = {
+      def maxToLeafs(tree: Tree[Int]): Int =
+        tree match {
+          case Leaf(value) => value
+          case Branch(left, right) =>
+            val leftMax = maxToLeafs(left)
+            val rightMax = maxToLeafs(right)
+            if (leftMax > rightMax) leftMax else rightMax
+        }
+
+      maxToLeafs(tree)
+    }
   }
 
   sealed trait Tree[+A]

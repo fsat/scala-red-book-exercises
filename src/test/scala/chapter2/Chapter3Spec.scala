@@ -237,6 +237,30 @@ class Chapter3Spec extends UnitTestLike {
             }
         }
     }
+
+    describe("maximum") {
+      Seq(
+        ("leaf", Leaf(1), 1),
+        ("simple tree", Branch(Leaf(1), Leaf(3)), 3),
+        ("complex tree",
+          Branch(
+            Branch(
+              Branch(
+                Leaf(1),
+                Leaf(2002)),
+              Leaf(37)),
+            Branch(
+              Leaf(41),
+              Branch(
+                Leaf(2),
+                Leaf(3)))), 2002)).foreach {
+          case (scenario, input, expectedResult) =>
+            it(scenario) {
+              Tree.maximum(input) shouldBe expectedResult
+            }
+        }
+    }
+
   }
 
 }
