@@ -203,4 +203,20 @@ object Chapter3 {
   sealed trait List[+A]
   case object Nil extends List[Nothing]
   case class Cons[+A](head: A, tail: List[A]) extends List[A]
+
+  object Tree {
+    def size[A](tree: Tree[A]): Int = {
+      def sizeToLeafs(tree: Tree[A]): Int =
+        tree match {
+          case Leaf(_) => 1
+          case Branch(left, right) => 1 + size(left) + size(right)
+        }
+
+      sizeToLeafs(tree)
+    }
+  }
+
+  sealed trait Tree[+A]
+  case class Leaf[A](value: A) extends Tree[A]
+  case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 }
