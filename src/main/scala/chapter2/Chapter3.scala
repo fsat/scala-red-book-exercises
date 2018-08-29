@@ -206,54 +206,37 @@ object Chapter3 {
 
   object Tree {
     def size[A](tree: Tree[A]): Int = {
-      def sizeToLeafs(tree: Tree[A]): Int =
-        tree match {
-          case Leaf(_) => 1
-          case Branch(left, right) => 1 + size(left) + size(right)
-        }
-
-      sizeToLeafs(tree)
+      fold(tree, 0)(_ => 1)(1 + _ + _ + _)
     }
 
     def maximum(tree: Tree[Int]): Int = {
-      def maxToLeafs(tree: Tree[Int]): Int =
-        tree match {
-          case Leaf(value) => value
-          case Branch(left, right) =>
-            val leftMax = maxToLeafs(left)
-            val rightMax = maxToLeafs(right)
-            if (leftMax > rightMax) leftMax else rightMax
-        }
-
-      maxToLeafs(tree)
+      fold(tree, 0)(identity)((_, left, right) => if (left > right) left else right)
     }
 
     def depth[A](tree: Tree[A]): Int = {
-      def depthToLeafs(tree: Tree[A], depth: Int): Int =
-        tree match {
-          case Leaf(_) => 1 + depth
-          case Branch(left, right) =>
-            val leftMax = depthToLeafs(left, depth)
-            val rightMax = depthToLeafs(right, depth)
-            1 + (if (leftMax > rightMax) leftMax else rightMax)
-        }
-
-      depthToLeafs(tree, 0)
+      fold(tree, 0)(_ => 1)((acc, left, right) => 1 + acc + (if (left > right) left else right))
     }
 
     def map[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
-      def mapToLeafs(tree: Tree[A]): Tree[B] =
+      fold[A, Tree[B]](tree, Empty)(v => Leaf(f(v)))((_, left, right) => Branch(left, right))
+    }
+
+    def fold[A, B](tree: Tree[A], zero: B)(f: A => B)(g: (B, B, B) => B): B = {
+      def foldToLeafs(tree: Tree[A], state: B): B =
         tree match {
-          case Leaf(v) => Leaf(f(v))
+          case Leaf(v) => f(v)
           case Branch(left, right) =>
-            Branch(mapToLeafs(left), mapToLeafs(right))
+            val leftResult = foldToLeafs(left, state)
+            val rightResult = foldToLeafs(right, state)
+            g(state, leftResult, rightResult)
         }
 
-      mapToLeafs(tree)
+      foldToLeafs(tree, zero)
     }
   }
 
   sealed trait Tree[+A]
+  case object Empty extends Tree[Nothing]
   case class Leaf[A](value: A) extends Tree[A]
   case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 }
