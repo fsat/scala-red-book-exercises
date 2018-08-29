@@ -240,6 +240,17 @@ object Chapter3 {
 
       depthToLeafs(tree, 0)
     }
+
+    def map[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
+      def mapToLeafs(tree: Tree[A]): Tree[B] =
+        tree match {
+          case Leaf(v) => Leaf(f(v))
+          case Branch(left, right) =>
+            Branch(mapToLeafs(left), mapToLeafs(right))
+        }
+
+      mapToLeafs(tree)
+    }
   }
 
   sealed trait Tree[+A]

@@ -286,6 +286,40 @@ class Chapter3Spec extends UnitTestLike {
         }
     }
 
+    describe("map") {
+      def plusOne(n: Int): Int = n + 1
+
+      Seq(
+        ("leaf", Leaf(1), Leaf(2)),
+        ("simple tree",
+          Branch(Leaf(1), Leaf(3)),
+          Branch(Leaf(2), Leaf(4))),
+        ("complex tree",
+          Branch(
+            Branch(
+              Branch(
+                Leaf(1),
+                Leaf(2)),
+              Leaf(3)),
+            Branch(
+              Leaf(4),
+              Leaf(5))),
+            Branch(
+              Branch(
+                Branch(
+                  Leaf(2),
+                  Leaf(3)),
+                Leaf(4)),
+              Branch(
+                Leaf(5),
+                Leaf(6))))).foreach {
+          case (scenario, input, expectedResult) =>
+            it(scenario) {
+              Tree.map(input)(plusOne) shouldBe expectedResult
+            }
+        }
+    }
+
   }
 
 }
