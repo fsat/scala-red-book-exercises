@@ -23,6 +23,10 @@ object Chapter4 {
         case Some(a) => a
         case _ => b
       }
+
+    def orElse[B >: A](b: => Option[B]): Option[B] = ???
+
+    def filter(f: A => Boolean): Option[A] = ???
   }
 
   case object None extends Option[Nothing]

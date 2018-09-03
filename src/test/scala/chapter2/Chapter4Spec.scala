@@ -16,12 +16,20 @@ class Chapter4Spec extends UnitTestLike {
   }
 
   describe("map") {
-    it("returns result of mapped function if present") {
-      Option(1).map(_.toLong + 10L) shouldBe Option(11L)
+    describe("Some") {
+      it("returns result of mapped function if present") {
+        Option(1).map(_.toLong + 10L) shouldBe Option(11L)
+      }
+
+      it("returns nothing otherwise") {
+        Option.empty[Int].map(_.toLong + 10L) shouldBe None
+      }
     }
 
-    it("returns nothing otherwise") {
-      Option.empty[Int].map(_.toLong + 10L) shouldBe None
+    describe("None") {
+      it("returns none regardless") {
+        Option.empty[Int].map(_ + 1) shouldBe None
+      }
     }
   }
 
@@ -54,6 +62,34 @@ class Chapter4Spec extends UnitTestLike {
 
     it("returns default value") {
       Option.empty[Int].getOrElse("hey") shouldBe "hey"
+    }
+  }
+
+  describe("orElse") {
+    it("returns the original option") {
+      Option(1).orElse(Option("fail")) shouldBe Option(1)
+    }
+
+    it("returns the fallback option") {
+      Option.empty[Int].orElse(Option("hey")) shouldBe Option("hey")
+    }
+  }
+
+  describe("filter") {
+    describe("Some") {
+      it("returns some value if filter returns true") {
+        Option(1).filter(_ == 1) shouldBe Option(1)
+      }
+
+      it("returns none if filter returns false") {
+        Option(1).filter(_ != 1) shouldBe None
+      }
+    }
+
+    describe("None") {
+      it("returns none regardless of filter ") {
+        Option.empty[Int].filter(_ => true) shouldBe None
+      }
     }
   }
 }
