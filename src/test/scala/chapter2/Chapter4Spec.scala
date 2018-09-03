@@ -17,11 +17,21 @@ class Chapter4Spec extends UnitTestLike {
 
   describe("map") {
     it("returns result of mapped function if present") {
-      map(Option(1))(_.toLong + 10L) shouldBe Option(11L)
+      Option(1).map(_.toLong + 10L) shouldBe Option(11L)
     }
 
     it("returns nothing otherwise") {
-      map[Int, Long](None)(_.toLong + 10L) shouldBe None
+      Option.empty[Int].map(_.toLong + 10L) shouldBe None
+    }
+  }
+
+  describe("getOrElse") {
+    it("returns the value inside the option") {
+      Option(1).getOrElse("hey") shouldBe 1
+    }
+
+    it("returns default value") {
+      Option.empty[Int].getOrElse("hey") shouldBe "hey"
     }
   }
 }

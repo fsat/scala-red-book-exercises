@@ -4,15 +4,26 @@ object Chapter4 {
   object Option {
     def apply[A](a: A): Option[A] =
       if (a == null) None else Some(a)
+
+    def empty[A]: Option[A] = None
   }
 
-  sealed trait Option[+A]
+  sealed trait Option[+A] {
+    def map[B](f: A => B): Option[B] =
+      this match {
+        case Some(a) => Some(f(a))
+        case _ => None
+      }
+
+    def getOrElse[B >: A](b: => B): B =
+      this match {
+        case Some(a) => a
+        case _ => b
+      }
+  }
+
   case object None extends Option[Nothing]
+
   case class Some[A](a: A) extends Option[A]
 
-  def map[A, B](o: Option[A])(f: A => B): Option[B] =
-    o match {
-      case Some(v) => Some(f(v))
-      case _ => None
-    }
 }
