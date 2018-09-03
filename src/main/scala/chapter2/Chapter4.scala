@@ -15,6 +15,9 @@ object Chapter4 {
         case _ => None
       }
 
+    def flatMap[B](f: A => Option[B]): Option[B] =
+      this.map(a => f(a)).getOrElse(None)
+
     def getOrElse[B >: A](b: => B): B =
       this match {
         case Some(a) => a
