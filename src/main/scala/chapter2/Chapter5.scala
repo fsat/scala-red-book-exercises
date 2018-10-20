@@ -33,7 +33,7 @@ object Chapter5 {
     def append[A](s: Stream[A], a: A): Stream[A] =
       s match {
         case Empty => cons(a, Empty)
-        case Cons(hd, tl) => cons(hd.apply(), append(tl.apply(), a))
+        case Cons(hd, tl) => Cons(hd, () => append(tl.apply(), a))
       }
 
     def take[A](s: Stream[A], n: Int): Stream[A] = {
