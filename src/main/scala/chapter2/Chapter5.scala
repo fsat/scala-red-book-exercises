@@ -29,5 +29,26 @@ object Chapter5 {
 
       recurse(s, List.empty)
     }
+
+    def append[A](s: Stream[A], a: A): Stream[A] =
+      s match {
+        case Empty => cons(a, Empty)
+        case Cons(hd, tl) => cons(hd.apply(), append(tl.apply(), a))
+      }
+
+    def take[A](s: Stream[A], n: Int): Stream[A] = {
+      @tailrec
+      def recurse(ss: Stream[A], count: Int, result: Stream[A]): Stream[A] = {
+        if (count <= 0)
+          result
+        else
+          ss match {
+            case Empty => result
+            case Cons(hd, tl) => recurse(tl.apply(), count - 1, append(result, hd.apply()))
+          }
+      }
+
+      recurse(s, n, Empty)
+    }
   }
 }
