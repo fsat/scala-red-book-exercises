@@ -1,9 +1,57 @@
 package chapter2
 
+import chapter2.Chapter5.Stream.cons
+
 import scala.annotation.tailrec
 
 object Chapter5 {
-  sealed trait Stream[+A]
+  sealed trait Stream[+A] {
+    def toList(): List[A] = {
+      @tailrec
+      def recurse(ss: Stream[A], result: List[A]): List[A] =
+        ss match {
+          case Empty => result
+          case Cons(hd, tl) => recurse(tl.apply(), result :+ hd.apply())
+        }
+
+      recurse(this, List.empty)
+    }
+
+    def append[B >: A](a: B): Stream[B] =
+      this match {
+        case Empty => cons(a, Empty)
+        case Cons(hd, tl) => Cons(hd, () => tl.apply().append(a))
+      }
+
+    def take(n: Int): Stream[A] = {
+      @tailrec
+      def recurse(ss: Stream[A], count: Int, result: Stream[A]): Stream[A] = {
+        if (count <= 0)
+          result
+        else
+          ss match {
+            case Empty => result
+            case Cons(hd, tl) => recurse(tl.apply(), count - 1, result.append(hd.apply()))
+          }
+      }
+
+      recurse(this, n, Empty)
+    }
+
+    def takeWhile(c: A => Boolean): Stream[A] = {
+      @tailrec
+      def recurse(ss: Stream[A], result: Stream[A]): Stream[A] =
+        ss match {
+          case Empty => result
+          case Cons(hd, tl) =>
+            val head = hd.apply()
+            val next = if (c(head)) result.append(head) else result
+            recurse(tl.apply(), next)
+        }
+
+      recurse(this, Empty)
+    }
+  }
   case object Empty extends Stream[Nothing]
   case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
@@ -18,51 +66,5 @@ object Chapter5 {
 
     def apply[A](as: A*): Stream[A] =
       if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
-
-    def toList[A](s: Stream[A]): List[A] = {
-      @tailrec
-      def recurse(ss: Stream[A], result: List[A]): List[A] =
-        ss match {
-          case Empty => result
-          case Cons(hd, tl) => recurse(tl.apply(), result :+ hd.apply())
-        }
-
-      recurse(s, List.empty)
-    }
-
-    def append[A](s: Stream[A], a: A): Stream[A] =
-      s match {
-        case Empty => cons(a, Empty)
-        case Cons(hd, tl) => Cons(hd, () => append(tl.apply(), a))
-      }
-
-    def take[A](s: Stream[A], n: Int): Stream[A] = {
-      @tailrec
-      def recurse(ss: Stream[A], count: Int, result: Stream[A]): Stream[A] = {
-        if (count <= 0)
-          result
-        else
-          ss match {
-            case Empty => result
-            case Cons(hd, tl) => recurse(tl.apply(), count - 1, append(result, hd.apply()))
-          }
-      }
-
-      recurse(s, n, Empty)
-    }
-
-    def takeWhile[A](s: Stream[A])(c: A => Boolean): Stream[A] = {
-      @tailrec
-      def recurse(ss: Stream[A], result: Stream[A]): Stream[A] =
-        ss match {
-          case Empty => result
-          case Cons(hd, tl) =>
-            val head = hd.apply()
-            val next = if (c(head)) append(result, head) else result
-            recurse(tl.apply(), next)
-        }
-
-      recurse(s, Empty)
-    }
   }
 }
