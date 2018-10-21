@@ -50,5 +50,19 @@ object Chapter5 {
 
       recurse(s, n, Empty)
     }
+
+    def takeWhile[A](s: Stream[A])(c: A => Boolean): Stream[A] = {
+      @tailrec
+      def recurse(ss: Stream[A], result: Stream[A]): Stream[A] =
+        ss match {
+          case Empty => result
+          case Cons(hd, tl) =>
+            val head = hd.apply()
+            val next = if (c(head)) append(result, head) else result
+            recurse(tl.apply(), next)
+        }
+
+      recurse(s, Empty)
+    }
   }
 }

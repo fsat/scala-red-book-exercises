@@ -22,4 +22,11 @@ class Chapter5Spec extends UnitTestLike {
       Stream.toList(x) shouldBe List(1, 2, 3, 4)
     }
   }
+
+  describe("takeWhile") {
+    it("takes element which matches predicate") {
+      val x = Stream.takeWhile(Stream(1, 2, 3, 4))(_ % 2 == 0)
+      Stream.toList(x) shouldBe List(2, 4)
+    }
+  }
 }
