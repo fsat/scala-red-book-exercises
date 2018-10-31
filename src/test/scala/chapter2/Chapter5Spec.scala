@@ -34,4 +34,12 @@ class Chapter5Spec extends UnitTestLike {
       s.forAll(_ <= 2) shouldBe false
     }
   }
+
+  // TODO: 5.6 and 5.7
+
+  describe("constant") {
+    it("returns stream of constant value") {
+      Stream.constant("hey").take(100).toList() shouldBe (0 until 100).map(_ => "hey")
+    }
+  }
 }
