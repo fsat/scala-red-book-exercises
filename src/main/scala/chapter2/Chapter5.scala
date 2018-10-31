@@ -38,19 +38,13 @@ object Chapter5 {
       recurse(this, n, Empty)
     }
 
-    def takeWhile(c: A => Boolean): Stream[A] = {
-      @tailrec
-      def recurse(ss: Stream[A], result: Stream[A]): Stream[A] =
-        ss match {
-          case Empty => result
-          case Cons(hd, tl) =>
-            val head = hd.apply()
-            val next = if (c(head)) result.append(head) else result
-            recurse(tl.apply(), next)
-        }
-
-      recurse(this, Empty)
-    }
+    def takeWhile(c: A => Boolean): Stream[A] =
+      foldRight[Stream[A]](Stream.empty[A]) { (elem, result) =>
+        if (c(elem)) {
+          Stream.cons(elem, result)
+        } else
+          result
+      }
 
     def forAll(c: A => Boolean): Boolean = {
       @tailrec
@@ -67,6 +61,12 @@ object Chapter5 {
         }
       recurse(this)
     }
+
+    def foldRight[B](z: => B)(f: (A, => B) => B): B =
+      this match {
+        case Cons(h, t) => f(h(), t().foldRight(z)(f))
+        case _ => z
+      }
   }
 
   case object Empty extends Stream[Nothing]
