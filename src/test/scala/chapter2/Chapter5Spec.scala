@@ -42,4 +42,11 @@ class Chapter5Spec extends UnitTestLike {
       Stream.constant("hey").take(100).toList() shouldBe (0 until 100).map(_ => "hey")
     }
   }
+
+  describe("from") {
+    it("returns stream of constantly incrementing integer") {
+      Stream.from(0).take(100).toList() shouldBe (0 until 100)
+      Stream.from(1000).take(100).toList() shouldBe (0 until 100).map(_ + 1000)
+    }
+  }
 }

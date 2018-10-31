@@ -85,5 +85,7 @@ object Chapter5 {
       if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
 
     def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
+
+    def from(a: Int): Stream[Int] = Stream.cons(a, from(a + 1))
   }
 }
