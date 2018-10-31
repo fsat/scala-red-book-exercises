@@ -17,7 +17,7 @@ object Chapter5 {
       recurse(this, List.empty)
     }
 
-    def append[B >: A](a: B): Stream[B] =
+    def append[B >: A](a: => B): Stream[B] =
       this match {
         case Empty => cons(a, Empty)
         case Cons(hd, tl) => Cons(hd, () => tl.apply().append(a))
