@@ -26,4 +26,12 @@ class Chapter5Spec extends UnitTestLike {
       Stream(1, 2, 3, 4).takeWhile(_ % 2 == 0).toList() shouldBe List(2, 4)
     }
   }
+
+  describe("forAll") {
+    it("returns true only if all elements are true") {
+      val s = Stream(1, 2, 3, 4)
+      s.forAll(_ > 0) shouldBe true
+      s.forAll(_ <= 2) shouldBe false
+    }
+  }
 }

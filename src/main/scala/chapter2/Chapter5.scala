@@ -51,7 +51,24 @@ object Chapter5 {
 
       recurse(this, Empty)
     }
+
+    def forAll(c: A => Boolean): Boolean = {
+      @tailrec
+      def recurse(ss: Stream[A]): Boolean =
+        ss match {
+          case Empty => true
+          case Cons(hd, tl) =>
+            val head = hd.apply()
+            val ok = c(head)
+            if (!ok)
+              false
+            else
+              recurse(tl.apply())
+        }
+      recurse(this)
+    }
   }
+
   case object Empty extends Stream[Nothing]
   case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
