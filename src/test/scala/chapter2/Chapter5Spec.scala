@@ -49,4 +49,23 @@ class Chapter5Spec extends UnitTestLike {
       Stream.from(1000).take(100).toList() shouldBe (0 until 100).map(_ + 1000)
     }
   }
+
+  describe("fib") {
+    it("returns fibonacci sequence") {
+      Stream.fib().take(7).toList() shouldBe Seq(0, 1, 1, 2, 3, 5, 8)
+    }
+  }
+
+  describe("unfold") {
+    it("returns the stream until none is returned") {
+      val s = Stream.unfold(0) { number =>
+        if (number <= 3)
+          Some(number, number + 1)
+        else
+          None
+      }
+
+      s.toList() shouldBe Seq(0, 1, 2, 3)
+    }
+  }
 }

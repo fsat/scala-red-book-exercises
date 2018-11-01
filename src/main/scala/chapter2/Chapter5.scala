@@ -84,8 +84,29 @@ object Chapter5 {
     def apply[A](as: A*): Stream[A] =
       if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
 
-    def constant[A](a: A): Stream[A] = Stream.cons(a, constant(a))
+    def constant[A](a: A): Stream[A] =
+      unfold(a)(_ => Some(a, a))
 
-    def from(a: Int): Stream[Int] = Stream.cons(a, from(a + 1))
+    def from(a: Int): Stream[Int] =
+      unfold(a)(a => Some(a, a + 1))
+
+    def fib(): Stream[Int] =
+      unfold((0, 1)) { v =>
+        val (a, b) = v
+        Some(a, (b, a + b))
+      }
+    //    {
+    //      def fib(a: Int, b: Int): Stream[Int] =
+    //        Stream.cons(a, fib(b, a + b))
+    //
+    //      fib(0, 1)
+    //    }
+
+    def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+      f(z) match {
+        case Some((a, b)) => Stream.cons(a, unfold(b)(f))
+        case _ => Stream.empty
+      }
+    }
   }
 }
